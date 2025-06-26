@@ -2,27 +2,29 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mridul Roy | Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mridul Roy | Dynamic Portfolio</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Segoe UI', sans-serif;
+      -webkit-tap-highlight-color: transparent; /* removes tap highlight on mobile */
     }
 
     body {
       background: radial-gradient(#0f0c29, #302b63, #24243e);
       color: white;
       min-height: 100vh;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .glass {
@@ -30,22 +32,25 @@
       backdrop-filter: blur(10px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 2rem;
       max-width: 900px;
       width: 100%;
       box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      padding: 2rem;
       text-align: center;
       animation: fadeIn 1s ease forwards;
+      margin-bottom: 2rem;
+      user-select: none;
     }
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       background: linear-gradient(45deg, #00f, #f0f);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       position: relative;
       display: inline-block;
+      cursor: default;
     }
 
     h1::after {
@@ -57,12 +62,21 @@
       left: 0;
       bottom: -5px;
       animation: underline 2s infinite ease-in-out;
+      transform-origin: left center;
     }
 
     @keyframes underline {
-      0% { transform: scaleX(0); }
-      50% { transform: scaleX(1); }
-      100% { transform: scaleX(0); }
+      0% {
+        transform: scaleX(0);
+      }
+
+      50% {
+        transform: scaleX(1);
+      }
+
+      100% {
+        transform: scaleX(0);
+      }
     }
 
     .typed-text {
@@ -75,78 +89,195 @@
       overflow: hidden;
       border-right: 2px solid #0ff;
       animation: blink 0.8s infinite;
+      user-select: none;
     }
 
     @keyframes blink {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: #0ff; }
+      0%,
+      100% {
+        border-color: transparent;
+      }
+
+      50% {
+        border-color: #0ff;
+      }
     }
 
     p.bio {
       font-size: 1.1rem;
       margin-bottom: 2rem;
       line-height: 1.6;
+      user-select: text;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      user-select: none;
     }
 
     .links a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      transition: all 0.3s;
-    }
-
-    .links a:hover {
-      color: #0ff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .spotify {
-      margin-top: 2rem;
-    }
-
-    iframe {
+      padding: 0.75rem 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-      width: 100%;
-      max-width: 500px;
+      background: #0ff;
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 0 15px #0ff;
+      transition: all 0.3s ease;
+      user-select: none;
+      /* make big tappable buttons on mobile */
+      font-size: 1rem;
+      display: inline-block;
+      touch-action: manipulation;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .links a:hover,
+    .links a:focus,
+    .links a:active {
+      background: #22ffff;
+      box-shadow: 0 0 25px #22ffff;
+      outline: none;
+    }
+
+    /* Projects Section */
+
+    #projects {
+      max-width: 900px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    /* On tap or click, add glow */
+    .project-card:active,
+    .project-card:focus {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 35px #0ff;
+      outline: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px #0ff;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #a0eaff;
+      font-weight: 700;
+      user-select: text;
+    }
+
+    .project-desc {
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #d0f0ffcc;
+      user-select: text;
+    }
+
+    .project-link {
+      align-self: flex-start;
+      padding: 0.5rem 1rem;
+      background: #0ff;
+      color: #000;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      user-select: none;
+      touch-action: manipulation;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .project-link:hover,
+    .project-link:focus,
+    .project-link:active {
+      background: #22ffff;
+      box-shadow: 0 0 20px #22ffff;
+      outline: none;
     }
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
+
       .typed-text {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+      }
+
+      #projects {
+        grid-template-columns: 1fr;
+      }
+
+      .links a {
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
+      }
+
+      .project-link {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.2rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="glass">
+  <div class="glass" role="banner">
     <h1>Mridul Roy</h1>
-    <div class="typed-text" id="typed"></div>
+    <div class="typed-text" id="typed" aria-live="polite" aria-atomic="true"></div>
     <p class="bio">
-      A passionate soul blending code, design, and melodies. <br>
+      A passionate soul blending code, design, and melodies. <br />
       From pixels to power chords, I do it all.
     </p>
-    <div class="links">
-      <a href="#">GitHub</a>
-      <a href="#">YouTube</a>
-      <a href="#">Instagram</a>
-    </div>
-    <div class="spotify">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1lDWb6b6ieDQ2xT7ewTC3G?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
+    <nav class="links" aria-label="Social media links">
+      <a href="#" target="_blank" rel="noopener noreferrer" tabindex="0">GitHub</a>
+      <a href="#" target="_blank" rel="noopener noreferrer" tabindex="0">YouTube</a>
+      <a href="#" target="_blank" rel="noopener noreferrer" tabindex="0">Instagram</a>
+    </nav>
   </div>
 
+  <section id="projects" aria-label="Projects">
+    <!-- Dynamic projects load here -->
+  </section>
+
   <script>
+    // Animated typing text
     const phrases = [
       "I’m a Web Developer.",
       "I’m a Designer.",
@@ -177,8 +308,65 @@
       }
       setTimeout(type, deleting ? 40 : 100);
     }
-
     type();
+
+    // Dynamic projects data — edit this to add/remove projects!
+    const projects = [
+      {
+        title: "Portfolio Website",
+        description: "My sleek, animated, responsive personal portfolio built with HTML, CSS & JS.",
+        url: "#"
+      },
+      {
+        title: "Song Collection",
+        description: "A curated list of my original songs and covers.",
+        url: "#"
+      },
+      {
+        title: "Design Works",
+        description: "Graphic design projects showcasing logos and posters.",
+        url: "#"
+      },
+      {
+        title: "Coding Challenges",
+        description: "Solutions to algorithm problems and fun coding exercises.",
+        url: "#"
+      }
+    ];
+
+    const projectsContainer = document.getElementById("projects");
+
+    function loadProjects() {
+      projectsContainer.innerHTML = "";
+      projects.forEach(({ title, description, url }) => {
+        const card = document.createElement("article");
+        card.className = "project-card";
+        card.tabIndex = 0; // make focusable for keyboard and mobile
+
+        const projTitle = document.createElement("h3");
+        projTitle.className = "project-title";
+        projTitle.textContent = title;
+
+        const projDesc = document.createElement("p");
+        projDesc.className = "project-desc";
+        projDesc.textContent = description;
+
+        const projLink = document.createElement("a");
+        projLink.className = "project-link";
+        projLink.href = url;
+        projLink.target = "_blank";
+        projLink.rel = "noopener noreferrer";
+        projLink.textContent = "View Project";
+
+        card.appendChild(projTitle);
+        card.appendChild(projDesc);
+        card.appendChild(projLink);
+
+        projectsContainer.appendChild(card);
+      });
+    }
+
+    loadProjects();
   </script>
 </body>
 
